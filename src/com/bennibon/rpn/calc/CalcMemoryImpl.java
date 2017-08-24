@@ -40,7 +40,6 @@ public class CalcMemoryImpl implements CalcMemory {
 		DecimalFormat formatter = new DecimalFormat("#.##########");
 		StringBuilder stackSb = new StringBuilder("stack: ");
 		List<Double> outputList = new ArrayList<>(stack);
-//		Collections.reverse(outputList);
 		stackSb.append(outputList.stream().map(d -> formatter.format(d.doubleValue())).collect(Collectors.joining(" ")));
 		return stackSb.toString();
 	}

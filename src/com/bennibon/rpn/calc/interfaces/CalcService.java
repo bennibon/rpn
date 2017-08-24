@@ -1,6 +1,6 @@
 package com.bennibon.rpn.calc.interfaces;
 
-import java.util.Stack;
+import java.util.Queue;
 
 import com.bennibon.rpn.calc.exceptions.InsufficientParametersException;
 import com.bennibon.rpn.facilitation.NumberOrOperator;
@@ -18,5 +18,5 @@ public interface CalcService {
 	 * @param memory
 	 * @throws InsufficientParametersException 
 	 */
-	void solve(Stack<NumberOrOperator> input, CalcMemory memory) throws InsufficientParametersException;
+	void solve(Queue<NumberOrOperator> input, CalcMemory memory) throws InsufficientParametersException;
 }

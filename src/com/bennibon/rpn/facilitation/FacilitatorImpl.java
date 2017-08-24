@@ -1,6 +1,6 @@
 package com.bennibon.rpn.facilitation;
 
-import java.util.Stack;
+import java.util.Queue;
 
 import com.bennibon.rpn.calc.CalcMemoryImpl;
 import com.bennibon.rpn.calc.CalcServiceImpl;
@@ -8,38 +8,34 @@ import com.bennibon.rpn.calc.exceptions.InsufficientParametersException;
 import com.bennibon.rpn.calc.exceptions.UnknownOperatorException;
 import com.bennibon.rpn.calc.interfaces.CalcMemory;
 import com.bennibon.rpn.calc.interfaces.CalcService;
-import com.bennibon.rpn.input.InputParser;
 
 public class FacilitatorImpl implements Facilitator {
 
-	private CalcService service;
+	private CalcService calcService;
 	
 	private CalcMemory memory;
 	
 	private InputParser parser;
 	
 	public FacilitatorImpl() {
-		service = new CalcServiceImpl();
+		calcService = new CalcServiceImpl();
 		memory = new CalcMemoryImpl();
 		parser = new InputParser();
 	}
 	
 	@Override
 	public boolean facilitate(String inputString) {
-		Stack<NumberOrOperator> inputStack;
+		Queue<NumberOrOperator> inputQueue;
 		boolean stop = false;
 		try {
-			inputStack = parser.parse(inputString);
-//			System.out.println(inputStack.toString());
+			inputQueue = parser.parse(inputString);
 			
-			service.solve(inputStack, memory);
+			calcService.solve(inputQueue, memory);
 			
 		} catch (UnknownOperatorException e) {
 			System.err.println(e.getMessage());
-			
 		} catch (InsufficientParametersException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		} finally {
 			System.out.println(memory.printStack());
 		}

@@ -28,4 +28,8 @@ public enum Operator {
 	public boolean isPrimitiveOperator() {
 		return this.compareTo(DIVIDE) <= 0;
 	}
+	
+	public boolean isControlOperator() {
+		return this.compareTo(UNDO) >= 0;
+	}
 }

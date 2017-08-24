@@ -1,17 +1,17 @@
-package com.bennibon.rpn.input;
+package com.bennibon.rpn.facilitation;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
+import java.util.Queue;
 
 import com.bennibon.rpn.calc.exceptions.UnknownOperatorException;
 import com.bennibon.rpn.calc.types.Operator;
-import com.bennibon.rpn.facilitation.NumberOrOperator;
 
 final public class InputParser {
+
+	private static final String NUMBER_REGEX = "\\d+(\\.\\d+)?";
 
 	private static final String INPUT_SEPARATOR = " ";
 	
@@ -29,27 +29,24 @@ final public class InputParser {
 	}
 	
 
-	final public Stack<NumberOrOperator> parse(String inputString) throws UnknownOperatorException {
-		Stack<NumberOrOperator> stack = new Stack<>();
+	final public Queue<NumberOrOperator> parse(String inputString) throws UnknownOperatorException {
+		Queue<NumberOrOperator> inputQueue = new LinkedList<>();
 		List<String> inputs = Arrays.asList(inputString.toLowerCase().trim().split(INPUT_SEPARATOR));
 		
 		if (inputs.isEmpty())
-			return stack;
+			return inputQueue;
 		
-		// reverse inputs so they can be worked on in the correct order
-		Collections.reverse(inputs);
 		
 		for (String input : inputs) {
-			if (input.matches("\\d+(\\.\\d+)?")) {
-				stack.push(NumberOrOperator.ofNumber(Double.parseDouble(input)));
+			if (input.matches(NUMBER_REGEX)) {
+				inputQueue.add(NumberOrOperator.ofNumber(Double.parseDouble(input)));
 			} else if (OPERATOR_MAP.containsKey(input)){
-				stack.push(NumberOrOperator.ofOperator(OPERATOR_MAP.get(input)));
+				inputQueue.add(NumberOrOperator.ofOperator(OPERATOR_MAP.get(input)));
 			} else {
 				throw new UnknownOperatorException(input);
 			}
-			System.out.println("pushing " + stack.peek());
 		}
-		return stack;
+		return inputQueue;
 		
 	}
 }
