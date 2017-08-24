@@ -34,7 +34,7 @@ final public class RpnCalculator {
 		InputStrategy strategy = null;
 		if (args.length == 0) {
 			strategy = new CommandLineStrategy();
-		} else if (args.length == 2 && args[0] == "-f") {
+		} else if (args.length == 2 && args[0].equals("-f")) {
 			strategy = new FileStrategy(args[1]);
 		} else {
 			printUsage();
@@ -44,8 +44,9 @@ final public class RpnCalculator {
 	}
 
 	private static void printUsage() {
-		// TODO Auto-generated method stub
-		
+		String usageString = "Reverse Polish Notation Calculator\nUsage\n"
+				 			+ "\t-f <filename>\tLoad instructions from file";
+		System.out.println(usageString);
 	}
 
 	
