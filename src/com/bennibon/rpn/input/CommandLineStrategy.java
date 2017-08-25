@@ -2,11 +2,25 @@ package com.bennibon.rpn.input;
 
 import java.util.Scanner;
 
+import com.bennibon.rpn.calc.types.Operator;
+
+/**
+ * The command line input strategy. 
+ * <p>
+ * This strategy takes the input from the command line.
+ * @author Ben Bonavia 2017
+ */
 public class CommandLineStrategy extends InputStrategy {
 	
+	/** string to quit. */
+	private static final String QUIT = "quit";
+	
+	/** The opening banner with quit instruction. */
+	private static final String CLI_BANNER = BANNER + "\nType \"quit\" to quit\n";
+	
 	@Override
-	public void process() {
-		displayBanner();
+	public void execute() {
+		System.out.println(CLI_BANNER);
 		Scanner inputScanner = new Scanner(System.in);
 		awaitInput(inputScanner);
 		
@@ -20,11 +34,14 @@ public class CommandLineStrategy extends InputStrategy {
 	 */
 	final private void awaitInput(Scanner inputScanner) {
 		
-		boolean stopWaiting = false;
-		while (!stopWaiting) {
+		while (true) {
 			System.out.print(PROMPT);
 			if (inputScanner.hasNextLine()) {
-				stopWaiting = calcFacilitator.facilitate(inputScanner.nextLine());
+				String inputLine = inputScanner.nextLine();
+				if (inputLine.toLowerCase().contains(QUIT)) {
+					break;
+				}
+				calcFacilitator.facilitate(inputLine);
 			}
 		}
 	}

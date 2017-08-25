@@ -6,18 +6,17 @@ import com.bennibon.rpn.input.InputStrategy;
 
 /**
  * Reverse Polish Notation Calculator.
- * @author bennibon
- *
+ * @author Ben Bonavia 2017
  */
 final public class RpnCalculator {
 	
 	/**
 	 * Program entry.
-	 * @param args The program arguements
+	 * @param args The program arguments
 	 */
 	public static void main(String[] args) {
 		InputStrategy inputStrategy = determineInputStrategy(args);
-		inputStrategy.process();
+		inputStrategy.execute();
 	}
 	
 	/**
@@ -43,6 +42,9 @@ final public class RpnCalculator {
 		return strategy;
 	}
 
+	/**
+	 * Print the usage if so there is a somewhat graceful exit.
+	 */
 	private static void printUsage() {
 		String usageString = "Reverse Polish Notation Calculator\nUsage\n"
 				 			+ "\t-f <filename>\tLoad instructions from file";
