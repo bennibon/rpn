@@ -33,7 +33,7 @@ public enum Operator {
     /**
      * Constructor.
      * @param _rep The string representation of the operator
-     * @param _operands The number of operands to be operated on 
+     * @param _operands The number of operands to be operated on
      */
     Operator(final String _rep, final int _operands) {
         this.rep = _rep;
@@ -44,10 +44,10 @@ public enum Operator {
      * Determine an {@link Operator} from a representation string.
      * @param rep the representation string
      * @return the operator
-     * @throws UnknownOperatorException if an operator does not exist for the representation 
+     * @throws UnknownOperatorException if an operator does not exist for the representation
      */
     public static Operator fromRepresentation(final String rep) throws UnknownOperatorException {
-        return Arrays.asList(values()).stream().filter(r -> r.representation().equals(rep)).findFirst()
+        return Arrays.asList(values()).stream().filter(r -> r.representation().equalsIgnoreCase(rep)).findFirst()
                 .orElseThrow(() -> new UnknownOperatorException(rep));
     }
 

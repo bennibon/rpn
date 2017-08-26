@@ -51,7 +51,7 @@ public class CalcFacade implements Calculator {
      * @return A list of inputs
      */
     final private List<String> separateInputs(final String inputString) {
-        return Arrays.asList(inputString.toLowerCase().trim().split(INPUT_SEPARATOR));
+        return Arrays.asList(inputString.trim().split(INPUT_SEPARATOR));
     }
 
 }

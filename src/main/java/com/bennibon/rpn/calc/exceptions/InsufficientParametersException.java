@@ -12,7 +12,7 @@ public class InsufficientParametersException extends CalculationServiceException
     private static final long serialVersionUID = 1L;
 
     /** Exception placeholder message. */
-    private static final String EXCEPTION_MESSAGE = "operator %s (position: %d): insufficient parameters ";
+    private static final String EXCEPTION_MESSAGE = "operator %s (position: %d): insufficient parameters";
 
     /**
      * Constructor.
