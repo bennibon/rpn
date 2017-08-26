@@ -15,84 +15,74 @@ import com.bennibon.rpn.calc.exceptions.UnknownOperatorException;
  * @author Ben Bonavia 2017
  */
 public enum Operator {
-	// Primitive operators
-	ADD ("+",2),
-	SUBTRACT ("-",2),
-	MULTIPLY ("*",2),
-	DIVIDE ("/",2),
-	
-	// Non-primitive
-	SQRT ("sqrt",1),
-	
-	// control operators
-	UNDO ("undo",0),
-	CLEAR ("clear",0);
+    // Primitive operators
+    ADD("+", 2), SUBTRACT("-", 2), MULTIPLY("*", 2), DIVIDE("/", 2),
 
-	/** The string representation of the operator. */
-	private String rep;
-	
-	/** The number of operands which are operated on. */
-	private int operands;
-	
-	/**
-	 * Constructor.
-	 * @param _rep The string representation of the operator
-	 * @param _operands The number of operands to be operated on 
-	 */
-	Operator(String _rep, int _operands) {
-		this.rep = _rep;
-		this.operands = _operands;
-	}
-	
-	/**
-	 * @return the operator to its text representation.
-	 */
-	public String representation() {
-		return rep;
-	}
-	
-	/**
-	 * @return the number of operands which are operated on.
-	 */
-	public int operands() {
-		return operands;
-	}
-	
-	/**
-	 * @return If this operator is a primitive operator.
-	 */
-	public boolean isPrimitiveOperator() {
-		return this.compareTo(DIVIDE) <= 0;
-	}
-	
-	/**
-	 * @return If this operator is a control operator.
-	 */
-	public boolean isControlOperator() {
-		return this.compareTo(UNDO) >= 0;
-	}
-	
-	/**
-	 * @return A list of operator values as strings.
-	 */
-	public static List<String> valuesAsStrings() {
-		return Arrays.asList(values())
-				.stream()
-				.map(o -> o.representation())
-				.collect(Collectors.toList());
-	}
-	
-	/**
-	 * Determine an {@link Operator} from a representation string.
-	 * @param rep the representation string
-	 * @return the operator
-	 * @throws UnknownOperatorException if an operator does not exist for the representation 
-	 */
-	public static Operator fromRepresentation(String rep) throws UnknownOperatorException {
-		return Arrays.asList(values())
-				.stream()
-				.filter(r -> r.representation().equals(rep))
-				.findFirst()
-				.orElseThrow(() -> new UnknownOperatorException(rep));
-	}
+    // Non-primitive
+    SQRT("sqrt", 1),
+
+    // control operators
+    UNDO("undo", 0), CLEAR("clear", 0);
+
+    /** The string representation of the operator. */
+    private String rep;
+
+    /** The number of operands which are operated on. */
+    private int operands;
+
+    /**
+     * Constructor.
+     * @param _rep The string representation of the operator
+     * @param _operands The number of operands to be operated on 
+     */
+    Operator(final String _rep, final int _operands) {
+        this.rep = _rep;
+        this.operands = _operands;
+    }
+
+    /**
+     * Determine an {@link Operator} from a representation string.
+     * @param rep the representation string
+     * @return the operator
+     * @throws UnknownOperatorException if an operator does not exist for the representation 
+     */
+    public static Operator fromRepresentation(final String rep) throws UnknownOperatorException {
+        return Arrays.asList(values()).stream().filter(r -> r.representation().equals(rep)).findFirst()
+                .orElseThrow(() -> new UnknownOperatorException(rep));
+    }
+
+    /**
+     * @return A list of operator values as strings.
+     */
+    public static List<String> valuesAsStrings() {
+        return Arrays.asList(values()).stream().map(o -> o.representation()).collect(Collectors.toList());
+    }
+
+    /**
+     * @return If this operator is a control operator.
+     */
+    public boolean isControlOperator() {
+        return this.compareTo(UNDO) >= 0;
+    }
+
+    /**
+     * @return If this operator is a primitive operator.
+     */
+    public boolean isPrimitiveOperator() {
+        return this.compareTo(DIVIDE) <= 0;
+    }
+
+    /**
+     * @return the number of operands which are operated on.
+     */
+    public int operands() {
+        return operands;
+    }
+
+    /**
+     * @return the operator to its text representation.
+     */
+    public String representation() {
+        return rep;
+    }
 }

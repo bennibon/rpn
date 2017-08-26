@@ -41,7 +41,7 @@ public class CommandLineStrategy extends InputStrategy {
 				if (inputLine.toLowerCase().contains(QUIT)) {
 					break;
 				}
-				calcFacilitator.facilitate(inputLine);
+				calc.process(inputLine);
 			}
 		}
 	}

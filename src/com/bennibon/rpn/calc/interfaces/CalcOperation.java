@@ -6,12 +6,12 @@ package com.bennibon.rpn.calc.interfaces;
  */
 @FunctionalInterface
 public interface CalcOperation {
-	
-	/**
-	 * Perform an operation for the given operands and return its result.
-	 * @param operand1 The first operand
-	 * @param operand2 The second operand
-	 * @return The result of the operation
-	 */
-	Double performOperation(Double operand1, Double operand2);
+
+    /**
+     * Perform an operation for the given operands and return its result.
+     * @param operand1 The first operand
+     * @param operand2 The second operand
+     * @return The result of the operation
+     */
+    Double performOperation(Double operand1, Double operand2);
 }

@@ -6,16 +6,16 @@ package com.bennibon.rpn.calc.exceptions;
  */
 public class CalculationServiceException extends Exception {
 
-	/** Default serialVersionUID. */
-	private static final long serialVersionUID = 1L;
+    /** Default serialVersionUID. */
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Constructor.
-	 * <p>
-	 * To allow child classes access to be raised with a message.
-	 * @param message The message to display.
-	 */
-	public CalculationServiceException(String message) {
-		super(message);
-	}
+    /** 
+     * Constructor.
+     * <p>
+     * To allow child classes access to be raised with a message.
+     * @param message The message to display.
+     */
+    public CalculationServiceException(final String message) {
+        super(message);
+    }
 }

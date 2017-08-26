@@ -7,16 +7,17 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * The file input strategy. 
+ * The file input strategy.
  * <p>
  * This strategy takes the input from a file.
+ * 
  * @author Ben Bonavia 2017
  */
-public class FileStrategy extends InputStrategy {
+final public class FileStrategy extends InputStrategy {
 
 	/** The file name. */
 	private String fileName;
-	
+
 	/**
 	 * Constructor.
 	 * 
@@ -27,7 +28,7 @@ public class FileStrategy extends InputStrategy {
 	}
 
 	@Override
-	public void execute() {
+	final public void execute() {
 		System.out.println(BANNER);
 		// try to open file
 		File instructionsFile = new File(fileName);
@@ -38,7 +39,7 @@ public class FileStrategy extends InputStrategy {
 			// Display all lines to stdout as if they were manually entered.
 			fileReader.lines().forEach(l -> {
 				System.out.println(PROMPT + l);
-				calcFacilitator.facilitate(l);
+				calc.process(l);
 			});
 		} catch (FileNotFoundException e) {
 			System.err.println(fileName + " cannot be found.");
