@@ -34,7 +34,10 @@ public class InputHandler {
 
         CONTROL_OPERATIONS = new HashMap<>();
         CONTROL_OPERATIONS.put(Operator.UNDO, m -> m.restorePrevious());
-        CONTROL_OPERATIONS.put(Operator.CLEAR, m -> m.history().clear());
+        CONTROL_OPERATIONS.put(Operator.CLEAR, m -> {
+            m.save();
+            m.stack().clear();
+        });
     }
 
     /**
@@ -67,8 +70,6 @@ public class InputHandler {
      * @param memory The calculator memory
      */
     private void performControlOperation(final Operator op, final CalcMemory memory) {
-        // clear the stack for all control operations
-        memory.stack().clear();
         CONTROL_OPERATIONS.get(op).accept(memory);
     }
 

@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
  */
 public final class CalcMemory {
 
+    /** Formatter to ensure the printed stack number is no larger than 10 decimal places. */
+    private static final DecimalFormat TEN_DEC_PLACE_FORMATTER = new DecimalFormat("#.##########");
+
     /** The current stack to be operated upon. */
     private Deque<Double> stack;
 
@@ -24,7 +27,7 @@ public final class CalcMemory {
     /**
      * Constructor.
      */
-    CalcMemory() {
+    public CalcMemory() {
         stack = new ArrayDeque<>();
         history = new ArrayDeque<>();
     }
@@ -40,15 +43,20 @@ public final class CalcMemory {
      * @return The stack printed as a {@link String}.
      */
     public final String printStack() {
-        final DecimalFormat formatter = new DecimalFormat("#.##########");
         final StringBuilder stackSb = new StringBuilder("stack: ");
-        stackSb.append(stack.stream().map(d -> formatter.format(d.doubleValue())).collect(Collectors.joining(" ")));
+        stackSb.append(stack.stream().map(d -> TEN_DEC_PLACE_FORMATTER.format(d.doubleValue()))
+                .collect(Collectors.joining(" ")));
         return stackSb.toString();
     }
 
+    /**
+     * Restore the stack to its previous state.
+     */
     public void restorePrevious() {
         if (!history.isEmpty()) {
             stack = new ArrayDeque<>(history.removeLast());
+        } else {
+            stack.clear();
         }
     }
 
@@ -56,7 +64,9 @@ public final class CalcMemory {
      * Save the current stack state to history.
      */
     public void save() {
-        history.addLast(new ArrayDeque<>(stack));
+        if (!stack.isEmpty()) {
+            history.addLast(new ArrayDeque<>(stack));
+        }
     }
 
     /**
