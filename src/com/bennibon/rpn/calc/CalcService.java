@@ -50,20 +50,8 @@ public class CalcService {
                 validateInput(op, memory.stack().size(), index);
                 inputHandler.handleOperator(op, memory);
             }
-
-            System.out.println("intermediate stack " + memory.stack());
-            System.out.println("intermediate history " + memory.history());
         }
 
-    }
-
-    /**
-     * Determine the original input position based on the index in the input list.
-     * @param index the index in the input list.
-     * @return the original input position
-     */
-    private int originalInputPosition(final int index) {
-        return index * 2 + 1;
     }
 
     /**
@@ -75,7 +63,10 @@ public class CalcService {
     private void validateInput(final Operator op, final int stackSize, final int index)
             throws InsufficientParametersException {
         if (op.operands() > stackSize) {
-            throw new InsufficientParametersException(op, originalInputPosition(index));
+            // multiply index by 2 to take into account whitespace, add 1 to fix
+            // up the start offset.
+            final int originalPosition = index * 2 + 1;
+            throw new InsufficientParametersException(op, originalPosition);
         }
 
     }

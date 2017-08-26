@@ -1,10 +1,8 @@
 package com.bennibon.rpn.calc;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.stream.Collectors;
 
 /**
@@ -18,23 +16,23 @@ import java.util.stream.Collectors;
 public final class CalcMemory {
 
     /** The current stack to be operated upon. */
-    private final Stack<Double> stack;
+    private Deque<Double> stack;
 
     /** The history of previous stacks. */
-    private final Stack<Collection<Double>> history;
+    private final Deque<Deque<Double>> history;
 
-    /** 
+    /**
      * Constructor.
      */
     CalcMemory() {
-        stack = new Stack<>();
-        history = new Stack<>();
+        stack = new ArrayDeque<>();
+        history = new ArrayDeque<>();
     }
 
     /**
      * @return The history of previous stack states.
      */
-    public final Stack<Collection<Double>> history() {
+    public final Deque<Deque<Double>> history() {
         return history;
     }
 
@@ -44,23 +42,27 @@ public final class CalcMemory {
     public final String printStack() {
         final DecimalFormat formatter = new DecimalFormat("#.##########");
         final StringBuilder stackSb = new StringBuilder("stack: ");
-        final List<Double> outputList = new ArrayList<>(stack);
-        stackSb.append(
-                outputList.stream().map(d -> formatter.format(d.doubleValue())).collect(Collectors.joining(" ")));
+        stackSb.append(stack.stream().map(d -> formatter.format(d.doubleValue())).collect(Collectors.joining(" ")));
         return stackSb.toString();
+    }
+
+    public void restorePrevious() {
+        if (!history.isEmpty()) {
+            stack = new ArrayDeque<>(history.removeLast());
+        }
     }
 
     /**
      * Save the current stack state to history.
      */
     public void save() {
-        history.push((Collection<Double>) stack.clone());
+        history.addLast(new ArrayDeque<>(stack));
     }
 
     /**
      * @return The current stack.
      */
-    public final Stack<Double> stack() {
+    public final Deque<Double> stack() {
         return stack;
     }
 

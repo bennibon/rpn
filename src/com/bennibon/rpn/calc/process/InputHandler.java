@@ -1,7 +1,7 @@
 package com.bennibon.rpn.calc.process;
 
+import java.util.Deque;
 import java.util.HashMap;
-import java.util.Stack;
 import java.util.function.Consumer;
 
 import com.bennibon.rpn.calc.CalcMemory;
@@ -33,7 +33,7 @@ public class InputHandler {
         MATH_OPERATIONS.put(Operator.SQRT, (a, b) -> Math.sqrt(a));
 
         CONTROL_OPERATIONS = new HashMap<>();
-        CONTROL_OPERATIONS.put(Operator.UNDO, m -> m.stack().addAll(m.history().pop()));
+        CONTROL_OPERATIONS.put(Operator.UNDO, m -> m.restorePrevious());
         CONTROL_OPERATIONS.put(Operator.CLEAR, m -> m.history().clear());
     }
 
@@ -44,7 +44,7 @@ public class InputHandler {
      */
     public void handleNumber(final Double number, final CalcMemory memory) {
         memory.save();
-        memory.stack().push(number);
+        memory.stack().addLast(number);
     }
 
     /**
@@ -77,14 +77,14 @@ public class InputHandler {
      * @param op The operator
      * @param stack The stack
      */
-    private void performMathOperation(final Operator op, final Stack<Double> stack) {
+    private void performMathOperation(final Operator op, final Deque<Double> stack) {
         Double slave = null;
         Double master = null;
         if (op.isPrimitiveOperator()) {
-            slave = stack.pop();
+            slave = stack.removeLast();
         }
-        master = stack.pop();
-        stack.push(MATH_OPERATIONS.get(op).performOperation(master, slave));
+        master = stack.removeLast();
+        stack.addLast(MATH_OPERATIONS.get(op).performOperation(master, slave));
     }
 
 }
