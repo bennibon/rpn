@@ -35,7 +35,7 @@ public enum Operator {
      * @param _rep The string representation of the operator
      * @param _operands The number of operands to be operated on
      */
-    Operator(final String _rep, final int _operands) {
+    private Operator(final String _rep, final int _operands) {
         this.rep = _rep;
         this.operands = _operands;
     }
