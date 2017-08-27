@@ -1,0 +1,34 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+jar {
+    doFirst {
+        from configurations.runtime
+        manifest {
+        attributes ('Main-Class': "com.bennibon.rpn.RpnCalculator",
+                    'Class-Path': configurations.runtime.files.collect { jarDir+"/$it.name" }.join(' ')
+                   )
+  }
+    }
+    doLast {
+        copy {
+            from 'build/libs/rpn.jar'
+            into project.projectDir
+        }
+    }
+}
+clean.doFirst {
+    delete "rpn.jar"
+}
+
+
+
+
