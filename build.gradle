@@ -9,24 +9,39 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
-jar {
+subprojects.each { subproject -> evaluationDependsOn(subproject.path)}
+
+task createJar(type: Jar, dependsOn: subprojects.assemble) {
     doFirst {
+       baseName = 'rpn'
+   
         from configurations.runtime
         manifest {
         attributes ('Main-Class': "com.bennibon.rpn.RpnCalculator",
                     'Class-Path': configurations.runtime.files.collect { jarDir+"/$it.name" }.join(' ')
-                   )
-  }
+                    )
+        }
+        subprojects.each { subproject -> 
+            from subproject.configurations.archives.allArtifacts.files.collect {
+                zipTree(it)
+            }
+        }
     }
     doLast {
         copy {
             from 'build/libs/rpn.jar'
             into project.projectDir
         }
-    }
-}
+
+   }
+ }
+
 clean.doFirst {
     delete "rpn.jar"
+}
+
+build.finalizedBy {
+    createJar
 }
 
 
