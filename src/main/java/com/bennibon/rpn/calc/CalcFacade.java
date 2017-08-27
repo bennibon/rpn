@@ -17,7 +17,7 @@ import com.bennibon.rpn.calc.exceptions.CalculationServiceException;
 public class CalcFacade implements Calculator {
 
     /** The separator between inputs. */
-    private static final String INPUT_SEPARATOR = " ";
+    private static final String INPUT_SEPARATOR = "\\s+";
 
     /** The Calculation Service. */
     private final CalcService calcService;
